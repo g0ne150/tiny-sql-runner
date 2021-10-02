@@ -25,12 +25,14 @@ func main() {
 	http.HandleFunc("/execute", func(rw http.ResponseWriter, r *http.Request) {
 		bodyRaw, err := ioutil.ReadAll(r.Body)
 		checkErr(err)
+
 		fmt.Printf("SQL execute request: %v\n", string(bodyRaw))
+
 		body := &ExecuteRequest{}
 		err = json.Unmarshal(bodyRaw, body)
 		checkErr(err)
 
-		cmd := exec.Command("sqlite3", "./target.db")
+		cmd := exec.Command("sqlite3", "-header", "./target.db")
 		inPipe, err := cmd.StdinPipe()
 		checkErr(err)
 
@@ -43,7 +45,6 @@ func main() {
 		output, _ := cmd.CombinedOutput()
 		// checkErr(err)
 
-		// rw.Header().Add("Content-Type", "application/json")
 		rw.Write(output)
 	})
 	http.ListenAndServe(":8080", nil)
