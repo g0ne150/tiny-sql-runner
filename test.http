@@ -1,0 +1,26 @@
+POST http://localhost:8080/execute
+Content-Type: application/json
+
+{"sql": "select * from employee;"}
+
+###
+
+POST http://localhost:8080/execute
+Content-Type: application/json
+
+{"sql": "insert into employee (name, level) values('Jackson', 11)"}
+
+
+###
+
+POST http://localhost:8080/execute
+Content-Type: application/json
+
+{"sql": "delete from  employee where name = 'Jackson'"}
+
+###
+
+POST http://localhost:8080/execute
+Content-Type: application/json
+
+{"sql": "error sql"}
